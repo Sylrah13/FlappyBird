@@ -970,6 +970,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pipe
       objectReference: {fileID: 0}
+    - target: {fileID: 2774169775255302712, guid: e568ad97b54a3ba448e643c8353526bd, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 2888143379272560209, guid: e568ad97b54a3ba448e643c8353526bd, type: 3}
       propertyPath: m_TagString
       value: Obstacle

@@ -3,27 +3,33 @@ using UnityEngine;
 public class PipeSpawner : MonoBehaviour
 {
     public GameObject pipePrefab;   // 생성할 파이프 프리팹
-    public float spawnDelay = 4f;   // 딜레이 시간
-    private float timeCheck = 0f;   // 시간 체크 변수
+    public float spawnInterval = 2f; // 생성 간격
+    public float pipeSpeed = 3f;    // 파이프 이동 속도
+    public float minY = -2f;        // 랜덤 Y 최소값
+    public float maxY = 2f;         // 랜덤 Y 최대값
 
-    public float minY = -2f;  // 파이프 위치 최소
-    public float maxY = 2f;   // 파이프 위치 최대
+    private float timer = 0f;
 
     void Update()
     {
-        timeCheck += Time.deltaTime;
+        timer += Time.deltaTime;
 
-        if (timeCheck >= spawnDelay)
+        if (timer >= spawnInterval)
         {
             SpawnPipe();
-            timeCheck = 0f; // 리셋
+            timer = 0f;
         }
     }
 
     void SpawnPipe()
     {
+        // 현재 스포너 위치를 기준으로 Y축만 랜덤하게 바꿔서 생성
         float randomY = Random.Range(minY, maxY);
-        Vector3 spawnPos = new Vector3(transform.position.x, randomY, 0);
-        Instantiate(pipePrefab, spawnPos, Quaternion.identity);
+        Vector3 spawnPos = new Vector3(transform.position.x, randomY, transform.position.z);
+
+        GameObject newPipe = Instantiate(pipePrefab, spawnPos, Quaternion.identity);
+
+        // 파이프 이동 스크립트 부착 (없으면 따로 만들어야 함)
+        newPipe.AddComponent<PipeMove>().speed = pipeSpeed;
     }
 }
